@@ -9,7 +9,7 @@ class StudentGrade(models.Model):
     academicSemesterPeriod = models.ForeignKey(AcademicSemesterPeriod, on_delete=models.CASCADE)
     teacherClass = models.ForeignKey(TeacherSubjectClass, on_delete=models.CASCADE)
     grade = models.FloatField()
-    grade_letter = models.CharField(max_length=5, null=True)
+    grade_letter = models.CharField(max_length=5, null=True, blank=True)
 
     def __str__(self):
         return f"{self.grade} {self.grade_letter}"
