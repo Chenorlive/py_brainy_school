@@ -1,0 +1,135 @@
+{% extends "base/layout.html" %} {% block content %}
+<div class="card p-2 row form-1 ">
+<div class="text-center col ">
+    <div class="d-flex flex-row text-center">
+        <div class="btn btn-outline-dark text-black mx-1 text-center">
+             <h5>List Of Student</h5>
+        </div>
+        <a class="btn btn-outline-dark text-black mx-1 text-center" href="#">
+             <h5>Add Student</h5>
+        </a>
+    </div>
+
+    <form class="col-auto mb-lg-0 me-lg-3 p-2" action="#" >
+        {% csrf_token %}
+        <input type="search" name="query" class="form-control form-control-dark" placeholder="Enter name or username ">
+    </form>
+    <div class="table-responsive">
+        <table class="table table-sm mt-4 ">
+            <thead>
+                {% if grade %}
+                    <tr>
+                        <th scope="col" rowspan="3">
+                            Student Info
+                        </th>
+                        <th scope="col" rowspan="3">
+                            Grade
+                        </th>
+
+                    </tr>
+                {% endif %}
+
+                <tr>
+                    <th scope="col">
+                        Username
+                    </th>
+                    <th scope="col">
+                        First Name
+                    </th>
+                    <th scope="col">
+                        Last Name
+                    </th>
+                    {% if grade %}
+                        <th scope="col">
+                            1st
+                        </th>
+                        <th scope="col">
+                            2nd
+                        </th>
+                        <th scope="col">
+                            3th
+                        </th>
+                        <th scope="col">
+                            1st Sem. Exam
+                        </th>
+                        <th scope="col">
+                            1st Sem. Ave.
+                        </th>
+                        <th scope="col">
+                            4th
+                        </th>
+                        <th scope="col">
+                            5th
+                        </th>
+                        <th scope="col">
+                            6th
+                        </th>
+                        <th scope="col">
+                            2nd Sem. Ave.
+                        </th>
+                        <th scope="col">
+                            Yrs Ave.
+                        </th>
+
+                    {% endif %}
+                    <th scope="col">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in clist %}
+                    <tr>
+                        <td>{{ obj.student.user.username }}</td>
+                        <td>{{ obj.student.user.first_name }}</td>
+                        <td>{{ obj.student.user.last_name }}</td>
+                        {% if grade %}
+                        
+                            <td>{{ obj.student.user.username }}</td>
+
+                            <th scope="col">
+                                2nd
+                            </th>
+                            <th scope="col">
+                                3th
+                            </th>
+                            <th scope="col">
+                                1st Sem. Exam
+                            </th>
+                            <th scope="col">
+                                1st Sem. Ave.
+                            </th>
+                            <th scope="col">
+                                4th
+                            </th>
+                            <th scope="col">
+                                5th
+                            </th>
+                            <th scope="col">
+                                6th
+                            </th>
+                            <th scope="col">
+                                2nd Sem. Ave.
+                            </th>
+                            <th scope="col">
+                                Yrs Ave.
+                            </th>
+
+                        {% endif %}
+                        <td>
+                            <a class="btn btn-outline-info text-secondary m-1 bi-eye  " href="#"></a>
+                            <a class="btn btn-outline-danger text-secondary m-1 bi-trash  " href="#"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+</div>
+
+
+
+{% endblock %}

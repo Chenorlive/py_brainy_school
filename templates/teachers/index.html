@@ -1,0 +1,19 @@
+
+
+{% extends "base/layout.html" %}  {% block content %} {% load static %}
+
+<div class="py-4"></div>
+  {% for item in tsubjectClass %}
+  <a href="{% url 'teacher_class' item.pk %}" class="ann">
+    <div class="list-group list-group-checkable d-grid gap-2 border-0 w-auto">
+      
+      <label class="list-group-item rounded-3 py-3" for="listGroupCheckableRadios1">
+        {{  item.teacherClass.name }} ({{  item.subject.name }})
+        <span class="d-block small opacity-50">With support text underneath to add more detail</span>
+      </label>
+  
+    </div>
+  </a>
+  {% endfor %}
+
+{% endblock %}

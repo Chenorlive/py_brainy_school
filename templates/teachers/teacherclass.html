@@ -1,0 +1,104 @@
+{% extends "base/layout.html" %}  {% block content %} {% load static %} {% load sms_extras %}
+
+<div class="py-3"></div>
+<div class="card p-2  row form-1 ">
+    <div class="text-center col ">
+        <div class="d-flex flex-row text-center">
+            <div>
+
+            </div>
+        </div>
+    
+        <form class="col-auto mb-lg-0 me-lg-3 p-2" action="#" >
+            {% csrf_token %}
+            <input type="search" name="query" class="form-control form-control-dark" placeholder="Enter name or username ">
+        </form>
+        <div class="table-responsive">
+            <table class="table table-sm mt-4 ">
+                <caption> Your schedule for {{ tSubjectClass.teacherClass.name }} </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Day
+                        </th>
+                        {% for obj in period %}
+                            <th scope="col" id="{{obj.pk}}">
+                                {{ obj.name }} <br>
+                                {{ obj.startTime|time:"H:i" }} - {{ obj.endTime|time:"H:i" }}
+                            </th>
+                        {% endfor %}
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monday</td>
+                        {% for obj in period %}
+                            <td id="M-{{ obj.pk }}">None</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        {% for obj in period %}
+                            <td id="T-{{ obj.pk }}">None</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        {% for obj in period %}
+                            <td id="W-{{ obj.pk }}">None</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        {% for obj in period %}
+                            <td id="Th-{{ obj.pk }}">None</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        {% for obj in period %}
+                            <td id="F-{{ obj.pk }}">None</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    {% block scripts %}
+            {% for obj in schedules %}
+                {% if obj.day == "Monday" %}                    
+                    <script type="text/javascript">
+                        document.getElementById('M-{{obj.period.pk}}').innerHTML = "<div>{{ obj.subject.name }} </br> {{ obj|teacherForSchedule }}</div>"
+                        console.log("M")
+                    </script>
+                {% endif %}
+                {% if obj.day == "Tuesday" %}
+                    <script type="text/javascript">
+                        document.getElementById('T-{{obj.period.pk}}').innerHTML = "<div>{{ obj.subject.name }} </br> {{ obj.subject.name }}</div>"
+                        console.log("T")
+                    </script>
+                {% endif %}
+                {% if obj.day == "Wednesday" %}
+                    <script type="text/javascript">
+                        document.getElementById('W-{{obj.period.pk}}').innerHTML = "<div>{{ obj.subject.name }} </br> {{ obj.subject.name }}</div>"
+                        console.log("W")
+                    </script>
+                {% endif %}
+                {% if obj.day == "Thursday" %}
+                    <script type="text/javascript">
+                        document.getElementById('Th-{{obj.period.pk}}').innerHTML = "<div>{{ obj.subject.name }} </br> {{ obj.subject.name }}</div>"
+                        console.log("Th")
+                    </script>
+                {% endif %}
+                {% if obj.day == "Friday" %}
+                    <script type="text/javascript">
+                        document.getElementById('F-{{obj.period.pk}}').innerHTML = "<div>{{ obj.subject.name }} </br> {{ obj|teacherForSchedule }}</div>"
+                        console.log("W")
+                    </script>
+                {% endif %}
+            {% endfor %}
+        
+        {% endblock %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base/layout.html" %}  {% block content %} {% load static %}
+
+  <div class="card  mb-3">
+    <section class="form-signi text-center p-4" >
+      <div class="hi">
+
+      </div>
+      <form method="post" action="{% url 'login' %}">
+        <img class="mb-4 mt-3" src="{% static 'blog/img/logo.png' %}" alt="" width="60" height="60">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+        {% csrf_token %}
+
+        <div class="form-floating">
+          <input type="text" name="username" class="form-control" id="floatingInput" placeholder="StudentID or Username">
+          <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+          <label for="floatingPassword">Password</label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-outline-dark text-secondary" type="submit">Sign in</button>
+      </form>
+    </section>
+  </div>
+
+{% endblock %}
