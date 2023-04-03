@@ -30,6 +30,8 @@ def studentGrade(request):
     user = request.user
     s_semester = request.session['school_semeter']
 
+    print(s_semester)
+
     st_class = StudentClass.objects.get(
         Q(student__user__username=user.username) &
         Q(academicSemester__pk=int(s_semester))
@@ -40,7 +42,7 @@ def studentGrade(request):
     )
 
     sGrade = StudentGrade.objects.all().filter(
-        Q(studentClass__student__user_username=user.username) &
+        Q(studentClass__student__user__username=user.username) &
         Q(academicSemesterPeriod__academicSemester__pk=int(s_semester)) 
     )
 
@@ -48,7 +50,7 @@ def studentGrade(request):
 
     context = {"grades": sGrade, "subjects": subject} 
 
-    return render(request, 'students/index.html', context)
+    return render(request, 'students/studentGrade.html', context)
 
 
 
