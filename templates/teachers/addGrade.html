@@ -10,15 +10,7 @@
         </a>
     </div>
 
-	<div class="form-floating">
-		<select name="period" id="period" class="form-control">
-			<option value="" selected> - select department - </option>
-			{% for p in period %}
-				<option value="{{ p.id }}">{{ p.periodType.name }} ({{ p.academicSemester.academicSemesterType.name }}) ({{ p.academicSemester.academicSchoolYear.name }})</option>
-			{% endfor %}
-		</select>
-		<label for="department">Department</label>
-	</div>
+	
 
     <form class="col-auto mb-lg-0 me-lg-3 p-2" action="#" >
         {% csrf_token %}
@@ -53,18 +45,38 @@
                         <td>{{ obj.student.user.first_name }}</td>
                         <td>{{ obj.student.user.last_name }}</td>
                         <td>
-							<form method="post" action="#">
+							<form method="post" action="{% url 'teacher_add_grade' teacher.pk pid %}" class="row w-100">
 						
 								{% csrf_token %}
 
-								<input type="text" name="Student" value="{{obj.user.pk}}" hidden>
+								<input type="text" name="student" value="{{obj.pk}}" hidden>
 								<input type="text" name="teacher" value="{{ teacher.pk }}"  hidden>
-								<input type="text" name="period" class="pd" hidden>
-								<div class="form-floating">
-								  <input type="number" name="grade" class="form-control" id="floatingInput" {% for grade in obj.s_class.all %} {% if grade.teacherClass.pk == teacher.pk and grade.studentClass.pk == obj.pk %} value="{{grade.grade}}" {% endif %} {% endfor %}>
-								  <label for="floatingInput" >Grade</label>
-								</div>
-								<button class="w-100 btn btn-lg btn-outline-dark text-secondary" type="submit">submit</button>
+								<input type="number" name="period" class="pd" hidden required>
+                                {% if obj.s_class.all %}
+                                {% for grade in obj.s_class.all %} 
+                                    {% if grade.teacherClass.pk == teacher.pk and grade.studentClass.pk == obj.pk %} 
+                                        <input type="number" name="if_update" value="1" hidden>
+                                        <div class="form-floating col-sm-9">
+                                            <input type="number" name="grade" class="form-control" value="{{grade.grade|floatformat:"0"}}">
+                                            <label >Grade</label>
+                                        </div>
+                                          
+                                    {% else %}
+                                        <div class="form-floating col-sm-9">
+                                            <input type="number" name="if_update" value="0" hidden>
+                                            <input type="number" name="grade" class="form-control">
+                                            <label >Grade</label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                    <div class="form-floating col-sm-9">
+                                        <input type="number" name="if_update" value="0" hidden>
+                                        <input type="number" name="grade" class="form-control">
+                                        <label >Grade</label>
+                                    </div>
+                                {% endif %}
+								<button class="col-sm-3 btn btn-sm btn-outline-dark mt-1" type="submit">submit</button>
 							  </form>
                         </td>
                     </tr>
@@ -80,7 +92,13 @@
 {% block scripts %}
 
 	<script>
-
+        var period = document.querySelectorAll('.pd');
+        function getPeriod(selectObject) {
+            var value = selectObject.value;
+            for (n = 0; n < period.length; ++n) {
+                period[n].value=value;
+            }
+          }
 	</script>
 
 {% endblock %}

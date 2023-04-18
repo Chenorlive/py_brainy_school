@@ -25,7 +25,7 @@ def studentIndex(request):
 
 
 
-def studentGrade(request):
+def studentGrade(request, ayid):
 
     user = request.user
     s_semester = request.session['school_semeter']
@@ -43,8 +43,8 @@ def studentGrade(request):
 
     sGrade = StudentGrade.objects.all().filter(
         Q(studentClass__student__user__username=user.username) &
-        Q(academicSemesterPeriod__academicSemester__pk=int(s_semester)) 
-    )
+        Q(academicSemesterPeriod__academicSemester__academicSchoolYear__pk=int(ayid)) 
+    ).select_related('studentClass__studentClass').select_related('academicSemesterPeriod')
 
     
 

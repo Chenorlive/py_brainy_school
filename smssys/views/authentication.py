@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from ..models import Student, Teacher, Staff, AcademicSchoolYear, AcademicSemester
+from django.db.models import Q 
 
 
 def login_view(request):
@@ -21,32 +22,32 @@ def login_view(request):
         
 
         s_year = AcademicSchoolYear.objects.all().filter(
-            isActive=True
-        ).filter(year=date.year).first()
+            Q(isActive=True)
+        ).first()
 
         s_semester = AcademicSemester.objects.all().filter(
-            isActive=True
-        ).filter(academicSchoolYear__year=date.year).first()
-
+            Q(isActive=True) & 
+            Q(academicSchoolYear__pk=s_year.pk)
+        ).first()
         login(request, user)
         msg = f'{username} have successful login'
         request.session['school_year'] = s_year.pk
         request.session['school_semeter'] = s_semester.pk
         
-        s_user = Student.objects.all().filter(user__username=username).first() # if its student
+        s_user = Student.objects.select_related('user').all().filter(user__username=username).first() # if its student
         print(s_user)
         if s_user and s_user.isActive:
             messages.success(request, msg)
             return redirect('student_index') # sent user to student dashboard
         
-        t_user = Teacher.objects.all().filter(user__username=username).first() # if its teacher
+        t_user = Teacher.objects.select_related('user').all().filter(user__username=username).first() # if its teacher
         print(t_user)
         if t_user and t_user.isActive:
             print('t')
             messages.success(request, msg)
             return redirect('teacher_index') # sent user to teacher dashboard
         
-        st_user = Staff.objects.all().filter(user__username=username).first() # if its teacher
+        st_user = Staff.objects.select_related('user').all().filter(user__username=username).first() # if its teacher
         print(st_user)
         if st_user and st_user.isActive:
             print('st')

@@ -4,10 +4,19 @@
 <div class="card p-2  row form-1 ">
     <div class="text-center col ">
         <div class="d-flex flex-row text-center">
-            <div>
-
+            <div class="form-floating col-sm-6">
+                <select name="period" id="period" onchange="getPeriod(this)" class="form-control">
+                    <option value="" selected> - select period - </option>
+                    {% for p in period %}
+                        <option value="{{ p.id }}">{{ p.periodType.name }} ({{ p.academicSemester.academicSemesterType.name }}) ({{ p.academicSemester.academicSchoolYear.name }})</option>
+                    {% endfor %}
+                </select>
+                <label for="department">Period</label>
             </div>
+            <button class="col-sm-3 btn btn-lg btn-outline-dark text-secondary" type="submit">Sign in</button>
         </div>
+
+        
     
         <form class="col-auto mb-lg-0 me-lg-3 p-2" action="#" >
             {% csrf_token %}

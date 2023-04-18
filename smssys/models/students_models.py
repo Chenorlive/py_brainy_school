@@ -32,7 +32,14 @@ class StudentClassReport(models.Model):
     studentClass = models.ForeignKey(StudentClass, on_delete=models.CASCADE)
     average = models.FloatField()
     statue = models.CharField(max_length=20)
+
+
+class StudentBillingReport(models.Model):
+    amount = models.FloatField()
+    balance = models.FloatField()
     
+
+
 # Perent models
 
 class Parent(models.Model):

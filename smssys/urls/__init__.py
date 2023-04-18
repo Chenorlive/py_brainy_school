@@ -21,8 +21,7 @@ urlpatterns = [
     path('teachers/class/<int:tscid>/', teacherClass, name="teacher_class"),
     path('teachers/class/<int:cid>/list/', classList, name="teacher_class_list"),
 
-    path('grades/add/<tscid>/', teacherAddGrade, name="teacher_add_grade"),
-
-
+    path('grades/add/<tscid>/<pid>/', teacherAddGrade, name="teacher_add_grade"),
+    
 
 ]

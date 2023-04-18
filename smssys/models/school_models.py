@@ -113,12 +113,3 @@ class Schedule(models.Model):
         return f'{self.scheduleClass} ({self.subject}) ({self.period.name})'
 
 
-class ClassBillingItems(models.Model):
-    Class = models.ForeignKey(Class, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    amountInUSD = models.FloatField()
-    amountInLRD = models.FloatField()
-    description = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name

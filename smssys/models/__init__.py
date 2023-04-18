@@ -12,9 +12,9 @@ from .grades_models import (
 
 
 from .school_models import (
-    School, AcademicSchoolYear, AcademicSemester, AcademicSemesterPeriod, 
-    PeriodType, Schedule, SchedulePeriod, Subject, Class, ClassType, 
-    AcademicSemesterType
+    School, AcademicSchoolYear, AcademicSemester, ClassType,
+    AcademicSemesterPeriod, PeriodType, Schedule, SchedulePeriod, 
+    Subject, Class, AcademicSemesterType
 )
 
 from .staff_models import (
@@ -22,10 +22,15 @@ from .staff_models import (
 )
 
 from .students_models import (
-    Student, StudentClass, Parent, FamilyMember
+    Student, StudentClass, Parent, FamilyMember, StudentBillingReport, 
+    StudentClassReport
 )
 
 
 from .teachers_models import (
     Teacher, TeacherSubjectClass, 
+)
+
+from .fanincial_models import (
+    BillingItemType, ClassBillingItems, ClassBillingSummary, Payment
 )

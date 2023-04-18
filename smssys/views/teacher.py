@@ -5,10 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 from ..functions import login_required
 from ..models import (
     Teacher, TeacherSubjectClass, Schedule, StudentClass, StudentGrade,
-    AcademicSemesterPeriod, SchedulePeriod
+    AcademicSemesterPeriod, SchedulePeriod, PeriodType
 )
 from ..forms import GradeForm
-from django.db.models import Q
+from django.db.models import Q 
 
 
 @login_required
@@ -17,7 +17,7 @@ def teacherIndex(request):
 
     tSubjectClass = TeacherSubjectClass.objects.all().filter(
         teacher__user__username=user.username
-    )
+    ).select_related('teacher__user')
 
     context = {'tsubjectClass': tSubjectClass}
     return render(request, 'teachers/index.html', context)
@@ -62,27 +62,61 @@ def teacherStudentGrade(request, cid):
     return render(request, 'teachers/classlist.html', context)
 
 
-def teacherAddGrade(request, tscid):
+def teacherAddGrade(request, tscid, pid):
+
+    if request.method == 'POST':
+        grade = request.POST['grade']
+        #period_pk = request.POST['period']
+        stClass = request.POST['student']
+        tscid = request.POST['teacher']
+        if_update = request.POST['if_update']
+        s_semester = request.session['school_semeter']
+      
+        period = AcademicSemesterPeriod.objects.all().filter(
+            academicSemester__pk=pid
+        )
+        tclass = TeacherSubjectClass.objects.all().filter(
+            pk=tscid
+        )
+
+        if if_update == "1":
+            sGrade = StudentGrade.objects.all().filter(
+                Q(studentClass__pk=stClass) & 
+                Q(academicSemesterPeriod__pk=pid) &
+                Q(teacherClass__pk=tscid)
+            ).first()
+            sGrade.grade = grade
+        else:
+            sGrade = StudentGrade(
+                studentClass__pk=stClass,
+                academicSemesterPeriod=period,
+                teacherClass__pk=tscid,
+                grade=grade,
+            )
+        sGrade.save()
+        return redirect(f'/grades/add/{tscid}/{pid}')
 
     tSubjectClass = TeacherSubjectClass.objects.all().filter(pk=tscid).select_related('teacher').first()
     clist = StudentClass.objects.all().filter(
         studentClass__pk=tSubjectClass.teacherClass.pk
     ).select_related('student')
 
+    period = AcademicSemesterPeriod.objects.all()
 
-    context = {'clist': clist, 'teacher': tSubjectClass}
+    context = {'clist': clist, 'teacher': tSubjectClass, 'pid': pid}
     return render(request, 'teachers/addGrade.html', context)
 
 
 
-def addgrade(request, tscid, sid):
+def addgrade(request, tscid):
 
     if request.method == 'POST':
         grade = request.POST['grade']
         period_pk = request.POST['period']
+        stClass = request.POST['student']
+        tscid = request.POST['teacher']
         s_semester = request.session['school_semeter']
 
-        stClass = StudentClass.objects.get(student__pk=sid)
         period = AcademicSemesterPeriod.objects.all().filter(
             academicSemester__pk=period_pk
         )
@@ -90,14 +124,13 @@ def addgrade(request, tscid, sid):
             pk=tscid
         )
 
-
         sGrade = StudentGrade(
-            studentClass=stClass,
+            studentClass__pk=stClass,
             academicSemesterPeriod=period,
-            teacherClass__pk=tclass,
+            teacherClass__pk=tscid,
             grade=grade,
          )
-
+        sGrade.save()
         
 
     context = {}

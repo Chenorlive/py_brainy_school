@@ -75,4 +75,6 @@ admin.site.register(Teacher)
 admin.site.register(TeacherSubjectClass)
 
 
+# fanincial
+
 
