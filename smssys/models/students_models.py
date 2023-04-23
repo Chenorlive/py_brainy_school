@@ -23,6 +23,7 @@ class StudentClass(models.Model):
         return f'{self.student.user.first_name} ({self.studentClass.name})'
     
 
+
 class StudentClassReport(models.Model):
     RStatue = (
         ('Passed', 'Passed'),
@@ -32,6 +33,7 @@ class StudentClassReport(models.Model):
     studentClass = models.ForeignKey(StudentClass, on_delete=models.CASCADE)
     average = models.FloatField()
     statue = models.CharField(max_length=20)
+
 
 
 class StudentBillingReport(models.Model):

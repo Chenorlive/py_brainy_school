@@ -5,7 +5,7 @@ from ..models import Student, MyUser
 class MyUserForm(forms.ModelForm):
     class Meta:
         model = MyUser
-        fields = '__all__'
+        fields = ('first_name', 'last_name', 'is_admin')
 
 
 class StudentForm(forms.ModelForm):
@@ -13,5 +13,5 @@ class StudentForm(forms.ModelForm):
 
     class Meta:
         model = Student
-        fields = '__all__'
+        fields = ('user', 'isActive')
 
