@@ -1,12 +1,16 @@
 from django.urls import path
 from ..views import (
     studentIndex, logout_view, login_view, teacherIndex, teacherAddGrade, classList, teacherClass,
-    studentGrade
+    studentGrade, createStudent
     
 )
 
 
 urlpatterns = [
+    # adminstrator
+
+    path('student/add', createStudent, name="add_student"),
+
     # authentication
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
