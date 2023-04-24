@@ -2,6 +2,8 @@ from .generic_models import models
 from .school_models import AcademicSemesterPeriod
 from .students_models import StudentClass
 from .teachers_models import TeacherSubjectClass
+from django.utils import timezone
+from django.conf import settings
 
 
 class StudentGrade(models.Model):
@@ -10,6 +12,9 @@ class StudentGrade(models.Model):
     teacherClass = models.ForeignKey(TeacherSubjectClass, on_delete=models.CASCADE)
     grade = models.FloatField()
     grade_letter = models.CharField(max_length=5, null=True, blank=True)
+    date_created = models.DateTimeField(default=timezone.now)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, )
+
 
     def __str__(self):
         return f"{self.grade} {self.grade_letter}"
