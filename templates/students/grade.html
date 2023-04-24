@@ -1,0 +1,31 @@
+{% extends "base/studentlayout.html" %}  {% block main %} {% load static %} {% load sms_extras %}
+
+<div class="container my-4">
+  <h1 class="text-center">{{ title }}</h1>
+
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Period</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for grade in grades %}
+          <tr>
+            <td>{{ grade.studentClass.subjectClass.subject.subjectName }}</td>
+            <td>{{ grade.academicSemesterPeriod.periodName }}</td>
+            <td>{{ grade.grade }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
