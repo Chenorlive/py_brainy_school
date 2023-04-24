@@ -31,7 +31,7 @@ def studentIndex(request):
 #     s_semester = request.session['school_semeter']
 
 #     return render(request, 'students/grade.html')
-
+@login_required
 def studentGrade(request, ayid):
 
     user = request.user
@@ -59,6 +59,13 @@ def studentGrade(request, ayid):
 
     return render(request, 'students/grade.html', context)
 
+
+@login_required
+def studentDetails(request):
+    user = request.user
+    context = {'user': user, 'title':'Details'}
+    
+    return render(request, 'students/details.html', context)
 
 
 @login_required
