@@ -18,7 +18,7 @@ urlpatterns = [
 
     # Student
     path('student/', studentIndex, name="student_index"),
-    path('student/grade/', studentGrade, name="student_grade"),
+    path('student/grade/<str:ayid>', studentGrade, name="student_grade"),
 
     # teacher
     path('teachers/', teacherIndex, name="teacher_index"),
