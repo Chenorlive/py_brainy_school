@@ -18,9 +18,9 @@ class StudentGrade(models.Model):
         g = self.grade
         if int(g) >= 90:
             self.grade_letter = 'A'
-        if int(g) >= 80:
+        if int(g) >= 80 and not int(g) > 89:
             self.grade_letter = 'B'
-        if int(g) >= 70:
+        if int(g) >= 70 and not int(g) > 79: 
             self.grade_letter = 'C'
         if int(g) <= 70:
             self.grade_letter = 'F'

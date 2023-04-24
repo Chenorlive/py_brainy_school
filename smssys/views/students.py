@@ -55,7 +55,7 @@ def studentGrade(request, ayid):
 
     context = {"grades": sGrade, "subjects": subject, 'title':'Grades'} 
 
-    return render(request, 'students/studentGrade.html', context)
+    return render(request, 'students/grade.html', context)
 
 
 
