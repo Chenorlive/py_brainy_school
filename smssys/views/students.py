@@ -20,10 +20,15 @@ def studentIndex(request):
         scheduleClass__pk=studentClass.studentClass.pk
     ).select_related('period')
 
-    context = {'schedules': schedules, 'period': period, 'stClass': studentClass}
+    context = {'schedules': schedules, 'period': period, 'stClass': studentClass, 'title':'Dashboard'}
     return render(request, 'students/index.html', context)
 
 
+# def studentGrade(request):
+#     user = request.user
+#     s_semester = request.session['school_semeter']
+
+#     return render(request, 'students/grade.html')
 
 def studentGrade(request, ayid):
 
@@ -48,9 +53,9 @@ def studentGrade(request, ayid):
 
     
 
-    context = {"grades": sGrade, "subjects": subject} 
+    context = {"grades": sGrade, "subjects": subject, 'title':'Grades'} 
 
-    return render(request, 'students/studentGrade.html', context)
+    return render(request, 'students/grade.html', context)
 
 
 
