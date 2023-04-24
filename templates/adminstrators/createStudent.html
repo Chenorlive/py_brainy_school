@@ -1,0 +1,56 @@
+{% extends "base/layout.html" %}  {% block content %} {% load static %}
+
+	<div class="card  mb-3">
+		<section class="form-signi form-1 text-center p-4" >
+		  <form method="post" action="#">
+			<img class="mb-4 mt-3" src="{% static 'blog/img/logo.png' %}" alt="" width="60" height="60">
+			<h1 class="h3 mb-3 fw-normal">Create User</h1>
+
+			{% csrf_token %}
+
+			{{ form }}
+
+            <div class="row ">
+                <div class=" col">
+                    <input type="text" name="first_name" class="form-control p-1" id="first_name" placeholder="Enter first name">
+                    
+                  </div>
+                  <div class="form-floating col">
+                    <input type="text" name="last_name" class="form-control p-1" id="last_name" placeholder="Enter last name">
+                    <label for="last_name">Last Name</label>
+                  </div>
+            </div>
+
+			<div class="form-floating">
+			  <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+			  <label for="floatingInput">Email address</label>
+			</div>
+			
+			<div class="form-floating">
+			  <select name="occupation" id="occupation" class="form-control">
+				  <option value="" selected> - select occupation - </option>
+				  <option value="President">President</option>
+				  <option value="Administrator">Administrator</option>
+				  <option value="Chairman">Chairman</option>
+				  <option value="Dean">Dean</option>
+				  <option value="Organization">Organization</option>
+			  </select>
+			  <label for="occupation">Occupation</label>
+			</div>
+			<div class="form-floating">
+			  <select name="department" id="department" class="form-control">
+				  <option value="" selected> - select department - </option>
+				  {% for dp in department %}
+				  	<option value="{{ dp.id }}">{{ dp.department_name }} ({{ dp.college.college_name }})</option>
+				  {% endfor %}
+			  </select>
+			  <label for="department">Department</label>
+			</div>
+
+			<button class="w-100 btn btn-lg btn-outline-dark text-secondary" type="submit">Create</button>
+		  </form>
+		</section>
+    </div>
+
+
+{% endblock %}

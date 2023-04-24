@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from .generic_models import models, GenderTypes, NationalityType
+from django.utils import timezone
 
 
 class MyUser(AbstractUser):
@@ -11,6 +12,8 @@ class MyUser(AbstractUser):
     image = models.ImageField("user_image",null=True, blank=True)
     gender = models.ForeignKey(GenderTypes,on_delete=models.CASCADE, null=True, blank=True)
     nationality = models.ForeignKey(NationalityType, on_delete=models.CASCADE, null=True, blank=True)
+    date_created = models.DateTimeField(default=timezone.now)
+
 
     objects = UserManager()
     USERNAME_FIELD = 'username'
