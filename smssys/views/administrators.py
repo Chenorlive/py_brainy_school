@@ -43,6 +43,9 @@ def createStudent(request):
         gender = request.POST['gender']
         nationality = request.POST['nationality']
 
+        
+        #username = f'SID{}'
+
 
 
 

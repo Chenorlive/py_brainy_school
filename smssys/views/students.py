@@ -54,6 +54,30 @@ def studentGrade(request, ayid):
 
 
 
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        new_password1 = request.POST['new_password1']
+        user = request.user
+        if old_password == 'none' or new_password == 'none' or new_password1 == 'none':
+            messages.error(request, 'Please fill in all fields')
+            return redirect('change_password')
+        if not user.check_password(old_password):
+            messages.error(request, "old password wrong")
+            return redirect('change_password')
+        if not new_password == new_password1:
+            messages.error(request, "new password don't matches")
+            return redirect('change_password')
+        user.set_password(new_password)
+        user.password_hint = new_password
+        user.save()
+        messages.success(request, 'Password successful changed')
+        return redirect('user_profile')
+    return render(request, 'users/change_password.html', {'year': datetime.now().year, 'title': 'change Password'})
+
+
 
 
 
