@@ -1,4 +1,4 @@
-from .students import studentIndex, studentGrade, change_password
+from .students import studentIndex, studentGrade, change_password, studentDetails
 
 from .authentication import login_view, logout_view
 

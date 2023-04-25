@@ -1,0 +1,58 @@
+{% extends "base/studentlayout.html" %}  {% block main %} {% load static %} {% load sms_extras %}
+
+<main class="content">
+    <div class="container-fluid p-0">
+
+        <div class="mb-3">
+            <h1 class="h3 d-inline align-middle">Student Details</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-xl-3">
+                <div class="card mb-3">
+                    <div class="card-body text-center">
+                        <img src="{{ user.image.url }}" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="100"  />
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                        <h5 class="h6 card-title">Account Credentials</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-1"><span data-feather="user" class="feather-sm me-1"></span> Username: <strong>{{ user.username }}</strong></li>
+                            <li class="mb-1"><span data-feather="lock" class="feather-sm me-1"></span> Password: <strong>{{ user.password_hint }}</strong></li>
+                        </ul>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                        <h5 class="h6 card-title">About</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-1"><span data-feather="home" class="feather-sm me-1"></span> Lives in {{ user.address }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-xl-9">
+                <div class="card">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Personal Information</h5>
+                    </div>
+                    <div class="card-body h-100">
+                        <div class="d-flex">
+                            <h2>{{ user.first_name }} {{ user.last_name }} </h2>
+                        </div>
+                        <hr />
+                        <div class="d-flex align-items-start">
+                            <h4>Born on {{ user.date_of_birth }} </h4>
+                        </div>
+                        <div class="d-grid">
+                            <a href="#" class="btn btn-primary">Load more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}

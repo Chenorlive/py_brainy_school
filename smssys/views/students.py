@@ -1,4 +1,5 @@
-from django.shortcuts import render
+import datetime
+from django.shortcuts import redirect, render
 from django.db.models import Prefetch
 from django.views.decorators.csrf import csrf_exempt
 from ..functions import login_required
@@ -30,7 +31,7 @@ def studentIndex(request):
 #     s_semester = request.session['school_semeter']
 
 #     return render(request, 'students/grade.html')
-
+@login_required
 def studentGrade(request, ayid):
 
     user = request.user
@@ -58,6 +59,13 @@ def studentGrade(request, ayid):
 
     return render(request, 'students/grade.html', context)
 
+
+@login_required
+def studentDetails(request):
+    user = request.user
+    context = {'user': user, 'title':'Details'}
+    
+    return render(request, 'students/details.html', context)
 
 
 @login_required

@@ -1,7 +1,9 @@
 from django.urls import path
+
+
 from ..views import (
     studentIndex, logout_view, login_view, teacherIndex, teacherAddGrade, classList, teacherClass,
-    studentGrade, createStudent, change_password
+    studentGrade, createStudent, change_password, studentDetails,
     
 )
 
@@ -12,6 +14,7 @@ urlpatterns = [
     path('student/add', createStudent, name="add_student"),
 
     # authentication
+    path('', login_view, name="login"),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
 
@@ -19,6 +22,7 @@ urlpatterns = [
     # Student
     path('student/', studentIndex, name="student_index"),
     path('student/grade/<str:ayid>', studentGrade, name="student_grade"),
+    path('student/details/', studentDetails, name="student_details" ),
 
     # teacher
     path('teachers/', teacherIndex, name="teacher_index"),
