@@ -34,3 +34,4 @@ from .teachers_models import (
 from .fanincial_models import (
     BillingItemType, ClassBillingItems, ClassBillingSummary, Payment
 )
+from .attendents_models import StudentAttendent

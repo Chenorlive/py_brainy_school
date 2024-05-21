@@ -23,7 +23,7 @@ class TeacherSubjectClass(models.Model):
     academicSchoolYear = models.ForeignKey(AcademicSchoolYear, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     date_created = models.DateTimeField(default=timezone.now)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True)
 
 
     def __str__(self):
@@ -31,6 +31,9 @@ class TeacherSubjectClass(models.Model):
     
     class Meta:
         unique_together = ('teacherClass', 'academicSchoolYear', 'subject')
+
+    
+    
 
 
 

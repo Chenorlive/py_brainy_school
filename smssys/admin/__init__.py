@@ -4,8 +4,9 @@ from .users_admin import UserAdmin
 from ..models import ( 
     MyUser, GenderTypes, MaritalStatusType, NationalityType, StudentGrade,
     School, AcademicSchoolYear, AcademicSemester, AcademicSemesterPeriod, 
-    AcademicSemesterType, PeriodType, Schedule, SchedulePeriod, Subject, Class, ClassType,
-    Staff, StaffTypes, Student, StudentClass, Parent, FamilyMember, Teacher, TeacherSubjectClass,
+    AcademicSemesterType, PeriodType, Schedule, SchedulePeriod, Subject, 
+    Class, ClassType, Staff, StaffTypes, Student, StudentClass, Parent, 
+    FamilyMember, Teacher, TeacherSubjectClass, StudentAttendent
  )
 
 from .adminModelsStack import (
@@ -74,7 +75,12 @@ admin.site.register(Teacher)
 
 admin.site.register(TeacherSubjectClass)
 
+# Attendent
+
+admin.site.register(StudentAttendent)
 
 # fanincial
+
+
 
 

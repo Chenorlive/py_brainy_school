@@ -26,6 +26,10 @@ class AcademicSchoolYear(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        obj = self.objects.update()
+
+        super().save(*args, **kwargs)
 
 class AcademicSemesterType(models.Model):
     name = models.CharField(max_length=100)

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ..functions import login_required
+from ..functions import login_required, gen_stid
 from ..forms import StudentForm
 from ..models import MyUser, Student, GenderTypes, NationalityType
 
@@ -18,20 +18,10 @@ def adminIndex(request):
 
 def createStudent(request):
 
-    gender = GenderTypes.objects.all()
-    nationality = NationalityType.objects.all()
-
     if request.method == 'POST':
         post = request.POST
 
-        user = MyUser(
-            first_name=post['f_name'], last_name=post['l_name'], email=post['email'],
-            gender=post['gender'],
-        )
-
-        student = Student(
-
-        )
+        user = request.user
 
         f_name = post['f_name']
         l_name = request.POST['l_name']
@@ -43,23 +33,42 @@ def createStudent(request):
         gender = request.POST['gender']
         nationality = request.POST['nationality']
 
-        
-        #username = f'SID{}'
+        gendertypes = GenderTypes.objects.get(pk=gender)
+        nationalitytype = NationalityType.objects.get(pk=nationality)
 
+        password = MyUser.objects.make_random_password(length=6)
+        username = gen_stid()
 
+        if image:
+            s_user = MyUser.objects.create(
+                first_name=f_name, last_name=l_name, username=username,
+                email=email, password_hint=password, address=address,
+                phone_number=phone_number, date_of_birth=dob, gender=gendertypes,
+                image=image, nationality=nationalitytype,
+            )
+        else:
+            s_user = MyUser.objects.create(
+                first_name=f_name, last_name=l_name, username=username,
+                email=email, password_hint=password, address=address,
+                phone_number=phone_number, date_of_birth=dob, gender=gendertypes,
+                image=image, nationality=nationalitytype,
+            )
 
+        s_user.set_password(password)
 
-        period_pk = request.POST['period']
-        stClass = request.POST['student']
-        tscid = request.POST['teacher']
-        if_update = request.POST['if_update']
+        s_user.save()
+
+        st = Student.objects.create(
+            user=s_user, created_by=user, stid=username
+        )
+
         s_semester = request.session['school_semeter']
 
     
     form = StudentForm
-    gender = GenderTypes.objects.all()
+    genders = GenderTypes.objects.all()
     nationality = NationalityType.objects.all()
-    context = {'form': form, 'gender': gender, 'nationality': nationality}
+    context = {'form': form, 'genders': genders, 'nationalities': nationality}
     return render(request, 'adminstrators/createStudent.html', context)
 
 

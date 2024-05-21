@@ -8,3 +8,4 @@ from ..models import (
 @receiver(pre_save, sender=AcademicSchoolYear)
 def  deactive_pre_school(sender, instance, *args, **kwargs):
     AcademicSchoolYear.objects.all().update()
+

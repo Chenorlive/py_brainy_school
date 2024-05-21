@@ -3,6 +3,7 @@ from .generic_models import models
 from django.conf import settings
 from .school_models import Class, AcademicSemester
 from django.utils import timezone
+import uuid
 
 
 # model
@@ -10,6 +11,7 @@ from django.utils import timezone
 class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     isActive = models.BooleanField(default=True)
+    stid = models.CharField(max_length=20, unique=True)
     date_created = models.DateTimeField(default=timezone.now)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="student_creator")
 

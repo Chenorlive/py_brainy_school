@@ -15,6 +15,7 @@ from django.db.models import Q
 def teacherIndex(request):
     user = request.user
 
+    #
     tSubjectClass = TeacherSubjectClass.objects.all().filter(
         teacher__user__username=user.username
     ).select_related('teacher__user')

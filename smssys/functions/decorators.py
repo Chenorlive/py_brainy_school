@@ -17,3 +17,4 @@ def allow_base_groups(allow_role=[]):
                     return redirect('/post/1')
         return wrapped_func
     return decorator
+

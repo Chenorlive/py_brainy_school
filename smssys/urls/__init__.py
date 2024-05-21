@@ -19,6 +19,7 @@ urlpatterns = [
     # Student
     path('student/', studentIndex, name="student_index"),
     path('student/grade/', studentGrade, name="student_grade"),
+    path('student/add/', createStudent, name="add_student"),
 
     # teacher
     path('teachers/', teacherIndex, name="teacher_index"),
@@ -28,7 +29,8 @@ urlpatterns = [
     path('grades/add/<tscid>/<pid>/', teacherAddGrade, name="teacher_add_grade"),
     
     #user
-    path('user/password/change/', change_password, name="change_password")
+    path('user/password/change/', change_password, name="change_password"),
     
-
 ]
+
+
